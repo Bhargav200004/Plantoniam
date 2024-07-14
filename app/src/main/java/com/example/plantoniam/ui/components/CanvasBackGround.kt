@@ -18,10 +18,10 @@ fun CanvasBackGround(
     Canvas(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.35f)
+            .fillMaxHeight()
     ) {
         val canvasWidth = size.width
-        val canvasHeight = size.height
+        val canvasHeight = size.height  - 200f
 
 
         val filterBarPath = Path().apply {
