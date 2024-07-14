@@ -22,14 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PlantoniamTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        HomeScreen()
-                    }
+                    HomeScreen()
                 }
             }
         }
