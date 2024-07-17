@@ -8,4 +8,6 @@ data class HomeData(
     val sunLightImage : FilterBarPictureComponents = FilterBarPictureComponents.SUNLIGHT,
     val waterImage : FilterBarPictureComponents = FilterBarPictureComponents.WATERING,
     val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.TOXIC,
+    val index : Int = 1,
+    val isTopBarShowing : Boolean = true
 )
