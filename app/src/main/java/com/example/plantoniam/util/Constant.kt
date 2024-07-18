@@ -1,6 +1,14 @@
 package com.example.plantoniam.util
 
+import com.example.plantoniam.BuildConfig
+
 object Constant {
 
-    const val PLANTORIAM_LOGS = "PLANTORIAM_LOGS"
+    const val PLANTONIAM_LOGS = "PLANTONIAM_LOGS"
+
+    const val BASEURL = "https://perenual.com/"
+
+    const val APIKEY = BuildConfig.API_KEY
+
+//    https://perenual.com/api/
 }

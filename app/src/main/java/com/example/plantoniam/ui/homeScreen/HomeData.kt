@@ -1,5 +1,7 @@
 package com.example.plantoniam.ui.homeScreen
 
+import com.example.plantoniam.domain.models.plantList.PlantList
+
 data class HomeData(
     val edibleImage : FilterBarPictureComponents = FilterBarPictureComponents.EDIBLE,
     val placeImage : FilterBarPictureComponents = FilterBarPictureComponents.OUTDOOR,
@@ -9,5 +11,6 @@ data class HomeData(
     val waterImage : FilterBarPictureComponents = FilterBarPictureComponents.WATERING,
     val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.TOXIC,
     val index : Int = 1,
-    val isTopBarShowing : Boolean = true
+    val isTopBarShowing : Boolean = true,
+    val plantList: PlantList? =  null
 )

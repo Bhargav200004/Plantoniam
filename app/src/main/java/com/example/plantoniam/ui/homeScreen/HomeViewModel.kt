@@ -3,7 +3,9 @@ package com.example.plantoniam.ui.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.plantoniam.util.Constant.PLANTORIAM_LOGS
+import com.example.plantoniam.domain.repository.PlantImageRepository
+import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,8 +13,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val plantImageRepository: PlantImageRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeData())
     val state : StateFlow<HomeData> = _state.asStateFlow().stateIn(
@@ -20,6 +26,14 @@ class HomeViewModel : ViewModel() {
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
         initialValue = HomeData()
     )
+
+
+    init {
+        getAllImage()
+    }
+
+
+
 
     fun onEvent(event: HomeEvent){
         when(event){
@@ -58,6 +72,26 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+
+    private fun getAllImage() {
+        try {
+            viewModelScope.launch {
+                val response = plantImageRepository.getAllPlantList()
+                Log.d(PLANTONIAM_LOGS,response.toString())
+                _state.update { state ->
+                    state.copy(
+                        plantList = response
+                    )
+                }
+            }
+
+        } catch (e : Exception) {
+            Log.e(PLANTONIAM_LOGS , e.message.toString())
+        }
+    }
+
+
+
     private fun onToxicButtonClick() {
         try {
             when (state.value.toxicImage) {
@@ -84,7 +118,7 @@ class HomeViewModel : ViewModel() {
                 else -> {}
             }
         } catch (e: Exception) {
-            Log.e(PLANTORIAM_LOGS, e.message.toString())
+            Log.e(PLANTONIAM_LOGS, e.message.toString())
         }
     }
 
@@ -114,7 +148,7 @@ class HomeViewModel : ViewModel() {
                 else -> {}
             }
         } catch (e: Exception) {
-            Log.e(PLANTORIAM_LOGS, e.message.toString())
+            Log.e(PLANTONIAM_LOGS, e.message.toString())
         }
     }
 
@@ -145,7 +179,7 @@ class HomeViewModel : ViewModel() {
             }
 
         } catch (e: Exception) {
-            Log.e(PLANTORIAM_LOGS, e.message.toString())
+            Log.e(PLANTONIAM_LOGS, e.message.toString())
         }
     }
 

@@ -35,8 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -46,7 +46,7 @@ import com.example.plantoniam.ui.navigation.Route
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
-    val viewModel: HomeViewModel = viewModel()
+    val viewModel: HomeViewModel = hiltViewModel()
 
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 

@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import com.example.plantoniam.ui.homeScreen.HomeScreen
 import com.example.plantoniam.ui.navigation.NavGraphSetup
 import com.example.plantoniam.ui.theme.PlantoniamTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
