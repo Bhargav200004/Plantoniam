@@ -1,22 +1,17 @@
 package com.example.plantoniam.domain.models.plantList
 
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
 
-
+@Serializable
 data class PlantList(
-    @SerializedName("current_page")
     val currentPage: Int,
-    @SerializedName("data")
-    val `data`: List<Data>,
-    @SerializedName("from")
+    val data: List<Data>,
     val from: Int,
-    @SerializedName("last_page")
     val lastPage: Int,
-    @SerializedName("per_page")
     val perPage: Int,
-    @SerializedName("to")
     val to: Int,
-    @SerializedName("total")
     val total: Int
 )

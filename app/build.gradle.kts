@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp.andorid)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.kotlin.serialization )
     alias(libs.plugins.compose.compiler)
 }
 
@@ -90,21 +89,21 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
 
-    //Paging
-    implementation(libs.androidx.paging.runtime.ktx)
-    implementation(libs.androidx.paging.compose)
-
-    //kotlinX Serialization
-    implementation(libs.kotlinx.serialization.json)
-
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.converter.scalars)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.okhttp)
-
-    implementation(libs.gson)
+//    //Paging
+//    implementation(libs.androidx.paging.runtime.ktx)
+//    implementation(libs.androidx.paging.compose)
+//
+//    //kotlinX Serialization
+//    implementation(libs.kotlinx.serialization.json)
+//
+//    //Retrofit
+//    implementation(libs.retrofit)
+//    implementation(libs.converter.gson)
+//    implementation(libs.converter.scalars)
+//    implementation(libs.retrofit2.kotlinx.serialization.converter)
+//    implementation(libs.okhttp)
+//    implementation(libs.squareup.logging.interceptor)
+//    implementation(libs.gson)
 
 
     //Dagger hilt
@@ -112,4 +111,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+
 }
