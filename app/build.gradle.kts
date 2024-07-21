@@ -3,9 +3,10 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.ksp.andorid)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -83,27 +84,29 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
     //compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil.compose)
 
-//    //Paging
-//    implementation(libs.androidx.paging.runtime.ktx)
-//    implementation(libs.androidx.paging.compose)
-//
-//    //kotlinX Serialization
-//    implementation(libs.kotlinx.serialization.json)
-//
-//    //Retrofit
-//    implementation(libs.retrofit)
-//    implementation(libs.converter.gson)
-//    implementation(libs.converter.scalars)
-//    implementation(libs.retrofit2.kotlinx.serialization.converter)
-//    implementation(libs.okhttp)
-//    implementation(libs.squareup.logging.interceptor)
-//    implementation(libs.gson)
+
+
+    //Splash Screen
+    implementation(libs.androidx.core.splashscreen)
+
+    //Cloudy for blurring effect
+    implementation(libs.cloudy)
+
+    //Paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
+
+    //kotlinX Serialization
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.ktor)
+
 
 
     //Dagger hilt

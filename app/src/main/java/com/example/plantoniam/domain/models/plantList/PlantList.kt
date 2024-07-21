@@ -3,15 +3,21 @@ package com.example.plantoniam.domain.models.plantList
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
 
 @Serializable
 data class PlantList(
+    @SerialName("current_page")
     val currentPage: Int,
-    val data: List<Data>,
+    @SerialName("data")
+    val `data`: List<Data>,
+    @SerialName("from")
     val from: Int,
+    @SerialName("last_page")
     val lastPage: Int,
+    @SerialName("per_page")
     val perPage: Int,
+    @SerialName("to")
     val to: Int,
+    @SerialName("total")
     val total: Int
 )

@@ -25,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,72 +53,74 @@ fun HomeScreen(navController: NavHostController) {
 
     val density = LocalDensity.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
+    Text(text = uiState.plantList.toString())
 
-    ) {
-
-        val requestImage = ImageRequest.Builder(LocalContext.current)
-            .data("https://perenual.com/storage/species_image/1_abies_alba/regular/1536px-Abies_alba_SkalitC3A9.jpg")
-            .crossfade(true)
-            .build()
-
-
-        AnimatedVisibility(
-            visible = uiState.isTopBarShowing,
-            enter = slideInVertically {
-                with( density) { -40.dp.roundToPx() }
-            } + expandVertically(
-                expandFrom = Alignment.Top
-            ) + fadeIn(
-                initialAlpha = 0.3f
-            ) ,
-            exit = slideOutVertically() + shrinkVertically() + fadeOut()
-        )   {
-            HomeScreenTopAppBar(
-                state = uiState,
-                onEvent = viewModel::onEvent
-            )
-        }
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 20.dp),
-        ) {
-
-            items(50) { index ->
-
-                LaunchedEffect(key1 = index) {
-                    viewModel.onEvent(HomeEvent.OnCountIndex(index = index))
-                }
-
-                ElevatedCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .padding(10.dp),
-                    onClick = { navController.navigate(Route.ImageScreenNavigation("23")) },
-                    shape = RoundedCornerShape(20.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-                ) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        model = requestImage,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
-                    )
-
-                }
-
-
-            }
-        }
-
-    }
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//
+//    ) {
+//
+//        val requestImage = ImageRequest.Builder(LocalContext.current)
+//            .data("https://perenual.com/storage/species_image/1_abies_alba/regular/1536px-Abies_alba_SkalitC3A9.jpg")
+//            .crossfade(true)
+//            .build()
+//
+//
+//        AnimatedVisibility(
+//            visible = uiState.isTopBarShowing,
+//            enter = slideInVertically {
+//                with( density) { -40.dp.roundToPx() }
+//            } + expandVertically(
+//                expandFrom = Alignment.Top
+//            ) + fadeIn(
+//                initialAlpha = 0.3f
+//            ) ,
+//            exit = slideOutVertically() + shrinkVertically() + fadeOut()
+//        )   {
+//            HomeScreenTopAppBar(
+//                state = uiState,
+//                onEvent = viewModel::onEvent
+//            )
+//        }
+//
+//        LazyVerticalGrid(
+//            columns = GridCells.Fixed(2),
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(top = 20.dp),
+//        ) {
+//
+//            items(50) { index ->
+//
+//                LaunchedEffect(key1 = index) {
+//                    viewModel.onEvent(HomeEvent.OnCountIndex(index = index))
+//                }
+//
+//                ElevatedCard(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .height(200.dp)
+//                        .padding(10.dp),
+//                    onClick = { navController.navigate(Route.ImageScreenNavigation("23")) },
+//                    shape = RoundedCornerShape(20.dp),
+//                    elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+//                ) {
+//                    AsyncImage(
+//                        modifier = Modifier
+//                            .fillMaxSize(),
+//                        model = requestImage,
+//                        contentDescription = null,
+//                        contentScale = ContentScale.FillBounds
+//                    )
+//
+//                }
+//
+//
+//            }
+//        }
+//
+//    }
 
 }
 
