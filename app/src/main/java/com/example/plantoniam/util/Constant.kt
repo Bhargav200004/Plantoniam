@@ -10,5 +10,4 @@ object Constant {
 
     const val APIKEY = BuildConfig.API_KEY
 
-//    https://perenual.com/api/
 }

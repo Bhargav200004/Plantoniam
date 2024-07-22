@@ -1,8 +1,9 @@
 package com.example.plantoniam.di
 
+import android.util.Log
 import com.example.plantoniam.data.repository.PlantImageRepositoryImpl
 import com.example.plantoniam.domain.repository.PlantImageRepository
-import com.example.plantoniam.util.Constant
+import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,7 @@ import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.accept
 import io.ktor.client.request.header
@@ -34,12 +36,17 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideService() : HttpClient{
-        return   HttpClient(Android) {
+    fun provideService(): HttpClient {
+        return HttpClient(Android) {
 
             // For Logging
             install(Logging) {
                 level = LogLevel.ALL
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Log.e(PLANTONIAM_LOGS, message)
+                    }
+                }
             }
 
             // Timeout plugin
@@ -66,15 +73,11 @@ object AppModule {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
                 //add this accept() for accept Json Body or Raw Json as Request Body
                 accept(ContentType.Application.Json)
+
             }
         }
 
     }
-
-
-
-
-
 
 
     //Providing repository Implementation dependency
@@ -85,8 +88,6 @@ object AppModule {
     ): PlantImageRepository {
         return PlantImageRepositoryImpl(httpClient)
     }
-
-
 
 
 }
