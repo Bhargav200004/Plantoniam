@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.example.plantoniam.ui.imageScreen.ImageScreen
 import com.example.plantoniam.ui.navigation.NavGraphSetup
 import com.example.plantoniam.ui.theme.PlantoniamTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,8 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        NavGraphSetup()
+
+                        ImageScreen()
 
 
                     }

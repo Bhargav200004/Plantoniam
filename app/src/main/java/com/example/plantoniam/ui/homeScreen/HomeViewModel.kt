@@ -33,13 +33,13 @@ class HomeViewModel @Inject constructor(
     }
 
 
-
-
     fun onEvent(event: HomeEvent){
         when(event){
             is HomeEvent.OnEdibleImageClick -> onEdibleImageClick()
             is HomeEvent.OnPlaceImageClick -> onPlaceImageClick()
-            is HomeEvent.OnClockImageClick -> {}
+            is HomeEvent.OnClockImageClick -> {
+
+            }
             is HomeEvent.OnCycleImageClick -> {}
             is HomeEvent.OnSunLightImageClick -> {}
             is HomeEvent.OnWaterImageClick -> {}
@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
 
-                    if (state.value.index > 6 ) {
+                    if (state.value.index > 12 ) {
                         _state.update { state ->
                             state.copy(
                                 isTopBarShowing = false
@@ -70,6 +70,23 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun getAllEdibleImage() {
+      try {
+          viewModelScope.launch {
+              val response = plantImageRepository.getAllEdiblePlantList("1")
+              Log.d(PLANTONIAM_LOGS,response.toString())
+              _state.update { state ->
+                  state.copy(
+                      plantList = response
+                  )
+              }
+          }
+      }
+      catch (e : Exception) {
+          Log.e(PLANTONIAM_LOGS , e.message.toString())
+      }
     }
 
 
@@ -163,6 +180,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
+
                 }
 
                 FilterBarPictureComponents.NON_EDIBLE -> {
@@ -173,8 +191,8 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
+//                    getAllEdibleImage()
                 }
-
                 else -> {}
             }
 

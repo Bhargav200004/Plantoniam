@@ -24,7 +24,7 @@ fun NavGraphSetup() {
 
         composable<Route.ImageScreenNavigation> { navBackStackEntry ->
             val id = navBackStackEntry.toRoute<Route.ImageScreenNavigation>().id
-            ImageScreen(navController)
+//            ImageScreen(navController)
         }
     }
 

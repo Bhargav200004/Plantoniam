@@ -9,6 +9,6 @@ class ImageViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val imageId = savedStateHandle.toRoute<Route.ImageScreenNavigation>().id
+//    val imageId = savedStateHandle.toRoute<Route.ImageScreenNavigation>().id
 
 }

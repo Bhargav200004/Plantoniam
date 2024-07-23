@@ -6,5 +6,7 @@ interface PlantImageRepository {
 
     suspend fun getAllPlantList(): PlantList
 
+    suspend fun getAllEdiblePlantList(edible : String) : PlantList
+
 
 }
