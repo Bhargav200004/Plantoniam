@@ -1,15 +1,20 @@
 package com.example.plantoniam.ui.imageScreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,7 +40,9 @@ fun ImageScreen() {
         "full sun",
         "part shade"
     )
+    val scientificName : List<String> = listOf(
 
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +50,8 @@ fun ImageScreen() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Image(
                 modifier = Modifier
@@ -53,13 +61,21 @@ fun ImageScreen() {
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
-            Text(text = "Common Name :- Moosewood")
-            Text(text = "scientific Name :- Acer pensylvanicum")
-            if (otherName.isNotEmpty()) {
-                Text(text = "Other Name")
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Common Name :- Moosewood",
+                style = MaterialTheme.typography.titleLarge
+            )
+            if (scientificName.isNotEmpty()) {
+                Text(
+                    text = "Scientific Name",
+                    style = MaterialTheme.typography.titleLarge
+                )
                 LazyRow {
                     items(otherName) { element ->
                         ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
                             onClick = { /*TODO*/ },
                             label = { Text(text = element) }
                         )
@@ -67,13 +83,41 @@ fun ImageScreen() {
 
                 }
             }
-            Text(text = "cycle: Perennial")
-            Text(text = "watering: Average")
             if (otherName.isNotEmpty()) {
-                Text(text = "Sunlight")
+                Text(
+                    text = "Other Name",
+                    style = MaterialTheme.typography.titleLarge
+                )
                 LazyRow {
+                    items(otherName) { element ->
+                        ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
+                            onClick = { /*TODO*/ },
+                            label = { Text(text = element) }
+                        )
+                    }
+
+                }
+            }
+            Text(
+                text = "cycle: Perennial",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = "watering: Average",
+                style = MaterialTheme.typography.titleLarge
+            )
+            if (sunlight.isNotEmpty()) {
+                Text(
+                    text = "Sunlight",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                LazyRow{
                     items(sunlight) { element ->
                         ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
                             onClick = { /*TODO*/ },
                             label = { Text(text = element) }
                         )
