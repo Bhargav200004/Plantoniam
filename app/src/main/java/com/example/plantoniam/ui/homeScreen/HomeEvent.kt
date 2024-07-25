@@ -1,5 +1,8 @@
 package com.example.plantoniam.ui.homeScreen
 
+import com.example.plantoniam.util.Cycle
+import com.example.plantoniam.util.Sunlight
+
 sealed class HomeEvent {
 
     data class OnEdibleImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
@@ -11,10 +14,10 @@ sealed class HomeEvent {
     data class OnClockImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
         HomeEvent()
 
-    data class OnCycleImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
+    data class OnCycleImageClick(val cycle: Cycle) :
         HomeEvent()
 
-    data class OnSunLightImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
+    data class OnSunLightImageClick(val sunlight: Sunlight) :
         HomeEvent()
 
     data class OnWaterImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
@@ -24,6 +27,15 @@ sealed class HomeEvent {
         HomeEvent()
 
     data class OnCountIndex(val index : Int) :
+            HomeEvent()
+
+    data object OnBottomSheetDismissClick :
+            HomeEvent()
+
+    data object OnBottomSheetClick :
+            HomeEvent()
+
+    data class OnSelectedChipClick(val selectedChip: SelectedChip) :
             HomeEvent()
 
 }

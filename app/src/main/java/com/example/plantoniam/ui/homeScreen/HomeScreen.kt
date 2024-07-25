@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,6 +30,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,6 +50,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.plantoniam.ui.components.CanvasBackGround
 import com.example.plantoniam.ui.navigation.Route
+import com.example.plantoniam.util.Cycle
+import com.example.plantoniam.util.Sunlight
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,6 +64,51 @@ fun HomeScreen(navController: NavHostController) {
 
     val density = LocalDensity.current
 
+    val sheetState = rememberModalBottomSheetState()
+
+
+
+    if (uiState.showModalBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { viewModel.onEvent(HomeEvent.OnBottomSheetDismissClick) },
+            sheetState = sheetState
+        ){
+
+            when(uiState.selectedChip){
+                SelectedChip.SUNLIGHT -> {
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SUN ))}) {
+                        Text(text = "FULL SUNLIGHT")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.SUN_PART_SHADE ))}) {
+                        Text(text = "SUN_PART_SHADE")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SHADE ))}) {
+                        Text(text = "FULL SHADE")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.PART_SHADE ))}) {
+                        Text(text = "PART SUNLIGHT")
+                    }
+                }
+                SelectedChip.CYCLE -> {
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.ANNUAL ))}) {
+                        Text(text = "ANNUAL")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIANNUAL ))}) {
+                        Text(text = "BIANNUAL")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIENNIAL ))}) {
+                        Text(text = "BIENNIAL")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL ))}) {
+                        Text(text = "PERENNIAL")
+                    }
+                }
+            }
+
+
+
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -250,11 +299,17 @@ fun Column2(
     ) {
         FilterBarImages(
             image = state.cycleImage,
-            onImageClick = { onEvent(HomeEvent.OnCycleImageClick(it)) }
+            onImageClick = {
+                onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.CYCLE))
+                onEvent(HomeEvent.OnBottomSheetClick)
+            }
         )
         FilterBarImages(
             image = state.sunLightImage,
-            onImageClick = { onEvent(HomeEvent.OnSunLightImageClick(it)) }
+            onImageClick = {
+                onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.SUNLIGHT))
+                onEvent(HomeEvent.OnBottomSheetClick)
+            }
         )
         FilterBarImages(
             image = state.waterImage,

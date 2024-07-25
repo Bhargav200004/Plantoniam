@@ -14,3 +14,9 @@ enum class FilterBarPictureComponents(val image : Int){
     TOXIC(image = R.drawable.poisonous),
     NON_TOXIC(image = R.drawable.non_toxic)
 }
+
+enum class SelectedChip{
+    SUNLIGHT,
+    CYCLE,
+
+}

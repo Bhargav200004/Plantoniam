@@ -38,8 +38,28 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnEdibleImageClick ->  onEdibleImageClick()
             is HomeEvent.OnPlaceImageClick -> onPlaceImageClick()
             is HomeEvent.OnClockImageClick -> {}
-            is HomeEvent.OnCycleImageClick -> {}
-            is HomeEvent.OnSunLightImageClick -> {}
+            is HomeEvent.OnCycleImageClick -> {
+                viewModelScope.launch {
+                    _state.update { state ->
+                        state.copy(
+                           selectedChip = SelectedChip.CYCLE
+                        )
+                    }
+                }
+                Log.d(PLANTONIAM_LOGS , event.cycle.value)
+                onBottomSheetDismissClick()
+            }
+            is HomeEvent.OnSunLightImageClick -> {
+                viewModelScope.launch {
+                    _state.update { state ->
+                        state.copy(
+                            selectedChip = SelectedChip.SUNLIGHT
+                        )
+                    }
+                }
+                Log.d(PLANTONIAM_LOGS , event.sunlight.value)
+                onBottomSheetDismissClick()
+            }
             is HomeEvent.OnWaterImageClick -> {}
             is HomeEvent.OnToxicImageClick -> onToxicButtonClick()
             is HomeEvent.OnCountIndex -> {
@@ -67,31 +87,54 @@ class HomeViewModel @Inject constructor(
 
                 }
             }
+
+            HomeEvent.OnBottomSheetDismissClick -> onBottomSheetDismissClick()
+            HomeEvent.OnBottomSheetClick -> onBottomSheetClick()
+            is HomeEvent.OnSelectedChipClick -> onSelectedChipClick(event)
         }
     }
 
-    private fun getAllEdibleImage() {
-      try {
-          viewModelScope.launch {
-              val response = plantImageRepository.getAllEdiblePlantList("1")
-              Log.d(PLANTONIAM_LOGS,response.toString())
-              _state.update { state ->
-                  state.copy(
-                      plantList = response
-                  )
-              }
-          }
-      }
-      catch (e : Exception) {
-          Log.e(PLANTONIAM_LOGS , e.message.toString())
-      }
+    private fun onSelectedChipClick(event: HomeEvent.OnSelectedChipClick) {
+        viewModelScope.launch {
+            when (event.selectedChip) {
+                SelectedChip.SUNLIGHT -> selectedChipChange(event.selectedChip)
+                SelectedChip.CYCLE -> selectedChipChange(event.selectedChip)
+            }
+        }
     }
 
+    private fun selectedChipChange( selectedChip: SelectedChip) {
+        _state.update { state->
+            state.copy(
+                selectedChip = selectedChip
+            )
+        }
+    }
 
-    private fun getAllImage() {
+    private fun onBottomSheetDismissClick() {
+        viewModelScope.launch {
+            _state.update { state ->
+                state.copy(
+                    showModalBottomSheet = false
+                )
+            }
+        }
+    }
+
+    private fun onBottomSheetClick() {
+        viewModelScope.launch {
+            _state.update { state ->
+                state.copy(
+                    showModalBottomSheet = true
+                )
+            }
+        }
+    }
+
+    private fun getAllImage(edible : String? = null) {
         try {
             viewModelScope.launch {
-                val response = plantImageRepository.getAllPlantList()
+                val response = plantImageRepository.getAllPlantList(edible = edible)
                 Log.d(PLANTONIAM_LOGS,response.toString())
                 _state.update { state ->
                     state.copy(
@@ -189,7 +232,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-                    getAllEdibleImage()
+                    getAllImage(edible = "1")
                 }
                 else -> {}
             }
@@ -201,4 +244,3 @@ class HomeViewModel @Inject constructor(
 
 
 }
-

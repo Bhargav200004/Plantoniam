@@ -13,4 +13,6 @@ data class HomeData(
     val index : Int = 1,
     val isTopBarShowing : Boolean = true,
     val plantList: PlantList? =  null,
+    val showModalBottomSheet : Boolean = false,
+    val selectedChip : SelectedChip = SelectedChip.SUNLIGHT
 )
