@@ -1,17 +1,17 @@
-package com.example.plantoniam.domain.models.edibleList
+package com.example.plantoniam.domain.models.plantList
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Data(
+data class PlantData(
     @SerialName("common_name")
     val commonName: String,
     @SerialName("cycle")
     val cycle: String,
     @SerialName("default_image")
-    val defaultImage: DefaultImage?,
+    val defaultImage: PlantDefaultImage?,
     @SerialName("id")
     val id: Int,
     @SerialName("other_name")

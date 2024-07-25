@@ -9,7 +9,7 @@ data class PlantList(
     @SerialName("current_page")
     val currentPage: Int,
     @SerialName("data")
-    val `data`: List<Data>,
+    val `data`: List<PlantData>,
     @SerialName("from")
     val from: Int,
     @SerialName("last_page")

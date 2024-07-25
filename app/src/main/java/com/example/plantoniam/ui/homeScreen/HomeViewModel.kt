@@ -35,11 +35,9 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent){
         when(event){
-            is HomeEvent.OnEdibleImageClick -> onEdibleImageClick()
+            is HomeEvent.OnEdibleImageClick ->  onEdibleImageClick()
             is HomeEvent.OnPlaceImageClick -> onPlaceImageClick()
-            is HomeEvent.OnClockImageClick -> {
-
-            }
+            is HomeEvent.OnClockImageClick -> {}
             is HomeEvent.OnCycleImageClick -> {}
             is HomeEvent.OnSunLightImageClick -> {}
             is HomeEvent.OnWaterImageClick -> {}
@@ -180,7 +178,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-
+                    getAllImage()
                 }
 
                 FilterBarPictureComponents.NON_EDIBLE -> {
@@ -191,7 +189,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-//                    getAllEdibleImage()
+                    getAllEdibleImage()
                 }
                 else -> {}
             }

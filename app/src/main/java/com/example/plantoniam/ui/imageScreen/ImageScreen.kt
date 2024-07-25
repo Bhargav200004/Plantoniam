@@ -43,6 +43,8 @@ fun ImageScreen() {
     val scientificName : List<String> = listOf(
 
     )
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()

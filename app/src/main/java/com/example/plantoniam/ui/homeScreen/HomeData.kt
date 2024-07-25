@@ -12,5 +12,5 @@ data class HomeData(
     val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.TOXIC,
     val index : Int = 1,
     val isTopBarShowing : Boolean = true,
-    val plantList: PlantList? =  null
+    val plantList: PlantList? =  null,
 )

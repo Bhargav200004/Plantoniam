@@ -60,12 +60,12 @@ fun HomeScreen(navController: NavHostController) {
 
     val density = LocalDensity.current
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
 
     ) {
-
         AnimatedVisibility(
             visible = uiState.isTopBarShowing,
             enter = slideInVertically {
@@ -130,7 +130,7 @@ private fun PhotoSection(
                     ) {
 
                         val requestImage = ImageRequest.Builder(LocalContext.current)
-                            .data(null) //data.defaultImage?.regularUrl
+                            .data(data.defaultImage?.regularUrl)
                             .crossfade(true)
                             .build()
 
