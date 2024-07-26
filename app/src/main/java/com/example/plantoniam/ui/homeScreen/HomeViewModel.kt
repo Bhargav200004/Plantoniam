@@ -60,7 +60,10 @@ class HomeViewModel @Inject constructor(
                 Log.d(PLANTONIAM_LOGS , event.sunlight.value)
                 onBottomSheetDismissClick()
             }
-            is HomeEvent.OnWaterImageClick -> {}
+            is HomeEvent.OnWaterImageClick -> {
+                Log.d(PLANTONIAM_LOGS , event.watering.value)
+                onBottomSheetDismissClick()
+            }
             is HomeEvent.OnToxicImageClick -> onToxicButtonClick()
             is HomeEvent.OnCountIndex -> {
                 viewModelScope.launch {
@@ -99,6 +102,7 @@ class HomeViewModel @Inject constructor(
             when (event.selectedChip) {
                 SelectedChip.SUNLIGHT -> selectedChipChange(event.selectedChip)
                 SelectedChip.CYCLE -> selectedChipChange(event.selectedChip)
+                SelectedChip.WATERING -> selectedChipChange(event.selectedChip)
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.plantoniam.ui.homeScreen
 
 import com.example.plantoniam.util.Cycle
 import com.example.plantoniam.util.Sunlight
+import com.example.plantoniam.util.Watering
 
 sealed class HomeEvent {
 
@@ -20,7 +21,7 @@ sealed class HomeEvent {
     data class OnSunLightImageClick(val sunlight: Sunlight) :
         HomeEvent()
 
-    data class OnWaterImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
+    data class OnWaterImageClick(val watering: Watering) :
         HomeEvent()
 
     data class OnToxicImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :

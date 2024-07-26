@@ -13,3 +13,10 @@ enum class Cycle(val value: String){
     BIENNIAL("biennial"),
     BIANNUAL("biannual")
 }
+
+enum class Watering(val value : String){
+    FREQUENT("frequent"),
+    AVERAGE("average"),
+    MINIMUM("minimum"),
+    NONE("none")
+}

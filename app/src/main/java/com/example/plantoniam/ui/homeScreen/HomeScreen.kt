@@ -52,6 +52,7 @@ import com.example.plantoniam.ui.components.CanvasBackGround
 import com.example.plantoniam.ui.navigation.Route
 import com.example.plantoniam.util.Cycle
 import com.example.plantoniam.util.Sunlight
+import com.example.plantoniam.util.Watering
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,6 +102,20 @@ fun HomeScreen(navController: NavHostController) {
                     }
                     Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL ))}) {
                         Text(text = "PERENNIAL")
+                    }
+                }
+                SelectedChip.WATERING -> {
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.FREQUENT ))}) {
+                        Text(text = "FREQUENT")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.AVERAGE ))}) {
+                        Text(text = "AVERAGE")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.MINIMUM ))}) {
+                        Text(text = "MINIMUM")
+                    }
+                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE ))}) {
+                        Text(text = "NONE")
                     }
                 }
             }
@@ -313,7 +328,10 @@ fun Column2(
         )
         FilterBarImages(
             image = state.waterImage,
-            onImageClick = { onEvent(HomeEvent.OnWaterImageClick(it)) }
+            onImageClick = {
+                onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.WATERING))
+                onEvent(HomeEvent.OnBottomSheetClick)
+            }
         )
     }
 }

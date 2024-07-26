@@ -18,5 +18,5 @@ enum class FilterBarPictureComponents(val image : Int){
 enum class SelectedChip{
     SUNLIGHT,
     CYCLE,
-
+    WATERING
 }
