@@ -14,8 +14,8 @@ class PlantImageRepositoryImpl @Inject constructor(
 ) : PlantImageRepository {
 
 
-    override suspend fun getAllPlantList(edible: String?): PlantList =
-        httpClient.get(addingParameterAtEnd("species-list") + "&edible=$edible").body()
+    override suspend fun getAllPlantList(edible: String? , indoor: String?): PlantList =
+        httpClient.get(addingParameterAtEnd("species-list") + "&edible=$edible" + "&indoor=$indoor").body()
 
 
 }

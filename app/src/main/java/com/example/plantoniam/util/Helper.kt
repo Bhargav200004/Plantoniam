@@ -9,3 +9,6 @@ fun addingParameterAtEnd(
     return BASEURL + getMethods + "?key=${Constant.APIKEY}"
 }
 
+fun ClosedFloatingPointRange<Float>.toInt() : Int {
+    return this.toInt()
+}

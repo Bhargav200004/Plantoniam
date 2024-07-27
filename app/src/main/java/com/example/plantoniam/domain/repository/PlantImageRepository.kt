@@ -4,8 +4,7 @@ import com.example.plantoniam.domain.models.plantList.PlantList
 
 interface PlantImageRepository {
 
-    suspend fun getAllPlantList(edible: String? = null): PlantList
-
+    suspend fun getAllPlantList(edible: String? = null , indoor: String? = null): PlantList
 
 
 }

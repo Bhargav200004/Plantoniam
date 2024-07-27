@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
         when(event){
             is HomeEvent.OnEdibleImageClick ->  onEdibleImageClick()
             is HomeEvent.OnPlaceImageClick -> onPlaceImageClick()
-            is HomeEvent.OnClockImageClick -> {}
+            is HomeEvent.OnTemperatureImageClick -> {}
             is HomeEvent.OnCycleImageClick -> {
                 viewModelScope.launch {
                     _state.update { state ->
@@ -103,6 +103,7 @@ class HomeViewModel @Inject constructor(
                 SelectedChip.SUNLIGHT -> selectedChipChange(event.selectedChip)
                 SelectedChip.CYCLE -> selectedChipChange(event.selectedChip)
                 SelectedChip.WATERING -> selectedChipChange(event.selectedChip)
+                SelectedChip.TEMPERATURE -> selectedChipChange(event.selectedChip)
             }
         }
     }
@@ -135,10 +136,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllImage(edible : String? = null) {
+    private fun getAllImage(edible : String? = null , indoor: String? = null) {
         try {
             viewModelScope.launch {
-                val response = plantImageRepository.getAllPlantList(edible = edible)
+                val response = plantImageRepository.getAllPlantList(edible = edible , indoor = indoor)
                 Log.d(PLANTONIAM_LOGS,response.toString())
                 _state.update { state ->
                     state.copy(
@@ -194,6 +195,7 @@ class HomeViewModel @Inject constructor(
                                 placeImage = FilterBarPictureComponents.OUTDOOR
                             )
                         }
+                        getAllImage(indoor = "0")
                     }
                 }
 
@@ -204,6 +206,7 @@ class HomeViewModel @Inject constructor(
                                 placeImage = FilterBarPictureComponents.INDORE
                             )
                         }
+                        getAllImage(indoor = "1")
                     }
                 }
 

@@ -9,7 +9,7 @@ enum class FilterBarPictureComponents(val image : Int){
     OUTDOOR(image = R.drawable.icons8_field_64),
     INDORE(image = R.drawable.icons8_indoor_64 ),
     SUNLIGHT(image = R.drawable.icons8_sunlight_64),
-    TIME(image = R.drawable.icons8_time_span_64),
+    TEMPERATURE(image = R.drawable.icons_temperature_64),
     WATERING(image = R.drawable.icons8_watering_can_64),
     TOXIC(image = R.drawable.poisonous),
     NON_TOXIC(image = R.drawable.non_toxic)
@@ -18,5 +18,6 @@ enum class FilterBarPictureComponents(val image : Int){
 enum class SelectedChip{
     SUNLIGHT,
     CYCLE,
-    WATERING
+    WATERING,
+    TEMPERATURE
 }

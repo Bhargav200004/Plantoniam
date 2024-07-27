@@ -5,7 +5,7 @@ import com.example.plantoniam.domain.models.plantList.PlantList
 data class HomeData(
     val edibleImage : FilterBarPictureComponents = FilterBarPictureComponents.NON_EDIBLE,
     val placeImage : FilterBarPictureComponents = FilterBarPictureComponents.OUTDOOR,
-    val timeImage : FilterBarPictureComponents = FilterBarPictureComponents.TIME,
+    val temperatureImage : FilterBarPictureComponents = FilterBarPictureComponents.TEMPERATURE,
     val cycleImage : FilterBarPictureComponents = FilterBarPictureComponents.CYCLE,
     val sunLightImage : FilterBarPictureComponents = FilterBarPictureComponents.SUNLIGHT,
     val waterImage : FilterBarPictureComponents = FilterBarPictureComponents.WATERING,

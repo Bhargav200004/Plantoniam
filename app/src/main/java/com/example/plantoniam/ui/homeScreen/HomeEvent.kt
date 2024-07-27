@@ -12,7 +12,7 @@ sealed class HomeEvent {
     data class OnPlaceImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
         HomeEvent()
 
-    data class OnClockImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
+    data class OnTemperatureImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
         HomeEvent()
 
     data class OnCycleImageClick(val cycle: Cycle) :

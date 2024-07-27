@@ -29,11 +29,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RangeSlider
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,7 +58,30 @@ import com.example.plantoniam.ui.navigation.Route
 import com.example.plantoniam.util.Cycle
 import com.example.plantoniam.util.Sunlight
 import com.example.plantoniam.util.Watering
-import kotlinx.coroutines.delay
+import com.example.plantoniam.util.toInt
+
+
+@Composable
+fun RangeSliderExample() {
+
+    val range : ClosedFloatingPointRange<Float> = 1f .. 13f
+
+    var sliderPosition by remember { mutableStateOf(range) }
+    Column {
+        RangeSlider(
+            value = sliderPosition,
+            steps = 13,
+            onValueChange = { range -> sliderPosition = range },
+            valueRange = 1f..13f,
+            onValueChangeFinished = {
+                // launch some business logic update with the state you hold
+                // viewModel.updateSelectedSliderValue(sliderPosition)
+            },
+        )
+        Text(text = sliderPosition.toString())
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -117,6 +145,9 @@ fun HomeScreen(navController: NavHostController) {
                     Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE ))}) {
                         Text(text = "NONE")
                     }
+                }
+                SelectedChip.TEMPERATURE -> {
+                    RangeSliderExample()
                 }
             }
 
@@ -295,8 +326,11 @@ private fun Column1(
             onImageClick = { onEvent(HomeEvent.OnPlaceImageClick(it)) }
         )
         FilterBarImages(
-            image = state.timeImage,
-            onImageClick = { onEvent(HomeEvent.OnClockImageClick(it)) }
+            image = state.temperatureImage,
+            onImageClick = {
+                onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.TEMPERATURE))
+                onEvent(HomeEvent.OnBottomSheetClick)
+            }
         )
     }
 }
