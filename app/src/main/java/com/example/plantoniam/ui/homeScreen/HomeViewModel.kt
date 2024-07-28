@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.round
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -94,7 +95,26 @@ class HomeViewModel @Inject constructor(
             HomeEvent.OnBottomSheetDismissClick -> onBottomSheetDismissClick()
             HomeEvent.OnBottomSheetClick -> onBottomSheetClick()
             is HomeEvent.OnSelectedChipClick -> onSelectedChipClick(event)
+            is HomeEvent.OnSliderValueChange -> onValueChange(event.range)
         }
+    }
+
+    private fun onValueChange(range: ClosedFloatingPointRange<Float>) {
+        viewModelScope.launch {
+            val start = round(range.start * 2) / 2
+            val end = round(range.endInclusive * 2) /2
+
+            if (end - start >= 1f) {
+                _state.update {state->
+                    state.copy(
+                        sliderPosition = start..end,
+                        startRange = start.toInt(),
+                        endRange = end.toInt()
+                    )
+                }
+            }
+        }
+
     }
 
     private fun onSelectedChipClick(event: HomeEvent.OnSelectedChipClick) {

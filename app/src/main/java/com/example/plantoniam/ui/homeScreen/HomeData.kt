@@ -14,5 +14,8 @@ data class HomeData(
     val isTopBarShowing : Boolean = true,
     val plantList: PlantList? =  null,
     val showModalBottomSheet : Boolean = false,
-    val selectedChip : SelectedChip = SelectedChip.SUNLIGHT
+    val selectedChip : SelectedChip = SelectedChip.SUNLIGHT,
+    val sliderPosition : ClosedFloatingPointRange<Float> = 1f..13f,
+    val startRange : Int = 1,
+    val endRange : Int = 13
 )

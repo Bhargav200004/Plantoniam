@@ -1,5 +1,6 @@
 package com.example.plantoniam.util
 
+import androidx.core.util.toRange
 import com.example.plantoniam.util.Constant.BASEURL
 
 
@@ -9,6 +10,3 @@ fun addingParameterAtEnd(
     return BASEURL + getMethods + "?key=${Constant.APIKEY}"
 }
 
-fun ClosedFloatingPointRange<Float>.toInt() : Int {
-    return this.toInt()
-}

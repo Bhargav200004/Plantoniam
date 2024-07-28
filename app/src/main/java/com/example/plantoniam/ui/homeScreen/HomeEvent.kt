@@ -39,4 +39,7 @@ sealed class HomeEvent {
     data class OnSelectedChipClick(val selectedChip: SelectedChip) :
             HomeEvent()
 
+    data class OnSliderValueChange(val range : ClosedFloatingPointRange<Float>) :
+            HomeEvent()
+
 }

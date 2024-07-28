@@ -35,10 +35,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,32 +54,8 @@ import com.example.plantoniam.ui.navigation.Route
 import com.example.plantoniam.util.Cycle
 import com.example.plantoniam.util.Sunlight
 import com.example.plantoniam.util.Watering
-import com.example.plantoniam.util.toInt
 
 
-@Composable
-fun RangeSliderExample() {
-
-    val range : ClosedFloatingPointRange<Float> = 1f .. 13f
-
-    var sliderPosition by remember { mutableStateOf(range) }
-    Column {
-        RangeSlider(
-            value = sliderPosition,
-            steps = 13,
-            onValueChange = { range -> sliderPosition = range },
-            valueRange = 1f..13f,
-            onValueChangeFinished = {
-                // launch some business logic update with the state you hold
-                // viewModel.updateSelectedSliderValue(sliderPosition)
-            },
-        )
-        Text(text = sliderPosition.toString())
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
@@ -93,67 +65,15 @@ fun HomeScreen(navController: NavHostController) {
 
     val density = LocalDensity.current
 
-    val sheetState = rememberModalBottomSheetState()
+
 
 
 
     if (uiState.showModalBottomSheet) {
-        ModalBottomSheet(
-            onDismissRequest = { viewModel.onEvent(HomeEvent.OnBottomSheetDismissClick) },
-            sheetState = sheetState
-        ){
-
-            when(uiState.selectedChip){
-                SelectedChip.SUNLIGHT -> {
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SUN ))}) {
-                        Text(text = "FULL SUNLIGHT")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.SUN_PART_SHADE ))}) {
-                        Text(text = "SUN_PART_SHADE")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SHADE ))}) {
-                        Text(text = "FULL SHADE")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.PART_SHADE ))}) {
-                        Text(text = "PART SUNLIGHT")
-                    }
-                }
-                SelectedChip.CYCLE -> {
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.ANNUAL ))}) {
-                        Text(text = "ANNUAL")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIANNUAL ))}) {
-                        Text(text = "BIANNUAL")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIENNIAL ))}) {
-                        Text(text = "BIENNIAL")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL ))}) {
-                        Text(text = "PERENNIAL")
-                    }
-                }
-                SelectedChip.WATERING -> {
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.FREQUENT ))}) {
-                        Text(text = "FREQUENT")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.AVERAGE ))}) {
-                        Text(text = "AVERAGE")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.MINIMUM ))}) {
-                        Text(text = "MINIMUM")
-                    }
-                    Button(onClick = {viewModel.onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE ))}) {
-                        Text(text = "NONE")
-                    }
-                }
-                SelectedChip.TEMPERATURE -> {
-                    RangeSliderExample()
-                }
-            }
-
-
-
-        }
+        BottomSheet(
+            uiState = uiState,
+            viewModel::onEvent,
+        )
     }
 
     Column(
@@ -164,14 +84,14 @@ fun HomeScreen(navController: NavHostController) {
         AnimatedVisibility(
             visible = uiState.isTopBarShowing,
             enter = slideInVertically {
-                with( density) { -40.dp.roundToPx() }
+                with(density) { -40.dp.roundToPx() }
             } + expandVertically(
                 expandFrom = Alignment.Top
             ) + fadeIn(
                 initialAlpha = 0.3f
-            ) ,
+            ),
             exit = slideOutVertically() + shrinkVertically() + fadeOut()
-        )   {
+        ) {
             HomeScreenTopAppBar(
                 state = uiState,
                 onEvent = viewModel::onEvent
@@ -186,6 +106,95 @@ fun HomeScreen(navController: NavHostController) {
 
     }
 
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun BottomSheet(
+    uiState: HomeData,
+    onEvent: (HomeEvent) -> Unit
+) {
+
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
+        onDismissRequest = { onEvent(HomeEvent.OnBottomSheetDismissClick) },
+        sheetState = sheetState
+    ) {
+
+        when (uiState.selectedChip) {
+            SelectedChip.SUNLIGHT -> {
+                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SUN)) }) {
+                    Text(text = "FULL SUNLIGHT")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.SUN_PART_SHADE)) }) {
+                    Text(text = "SUN_PART_SHADE")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SHADE)) }) {
+                    Text(text = "FULL SHADE")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.PART_SHADE)) }) {
+                    Text(text = "PART SUNLIGHT")
+                }
+            }
+
+            SelectedChip.CYCLE -> {
+                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.ANNUAL)) }) {
+                    Text(text = "ANNUAL")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIANNUAL)) }) {
+                    Text(text = "BIANNUAL")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIENNIAL)) }) {
+                    Text(text = "BIENNIAL")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL)) }) {
+                    Text(text = "PERENNIAL")
+                }
+            }
+
+            SelectedChip.WATERING -> {
+                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.FREQUENT)) }) {
+                    Text(text = "FREQUENT")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.AVERAGE)) }) {
+                    Text(text = "AVERAGE")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.MINIMUM)) }) {
+                    Text(text = "MINIMUM")
+                }
+                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE)) }) {
+                    Text(text = "NONE")
+                }
+            }
+
+            SelectedChip.TEMPERATURE -> {
+                Column(
+                    modifier = Modifier
+                        .padding(end = 28.dp)
+                ) {
+                    RangeSlider(
+                        value = uiState.sliderPosition,
+                        steps = 12,
+                        onValueChange = { onEvent(HomeEvent.OnSliderValueChange(range = it)) },
+                        valueRange = 1f..13f,
+                        onValueChangeFinished = { },
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = uiState.startRange.toString())
+                        Text(text = uiState.endRange.toString())
+                    }
+                }
+            }
+        }
+
+
+    }
 }
 
 @Composable
@@ -217,8 +226,7 @@ private fun PhotoSection(
                     ElevatedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
-                            ,
+                            .height(200.dp),
                         onClick = { navController.navigate(Route.ImageScreenNavigation(data.id.toString())) },
                         shape = RoundedCornerShape(20.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
