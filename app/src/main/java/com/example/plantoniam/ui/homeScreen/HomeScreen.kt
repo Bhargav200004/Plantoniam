@@ -66,9 +66,6 @@ fun HomeScreen(navController: NavHostController) {
     val density = LocalDensity.current
 
 
-
-
-
     if (uiState.showModalBottomSheet) {
         BottomSheet(
             uiState = uiState,
@@ -121,64 +118,146 @@ private fun BottomSheet(
         onDismissRequest = { onEvent(HomeEvent.OnBottomSheetDismissClick) },
         sheetState = sheetState
     ) {
-
         when (uiState.selectedChip) {
             SelectedChip.SUNLIGHT -> {
-                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SUN)) }) {
-                    Text(text = "FULL SUNLIGHT")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.SUN_PART_SHADE)) }) {
-                    Text(text = "SUN_PART_SHADE")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SHADE)) }) {
-                    Text(text = "FULL SHADE")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.PART_SHADE)) }) {
-                    Text(text = "PART SUNLIGHT")
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SUN)) }
+                    ) {
+                        Text(text = "FULL SUNLIGHT")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.SUN_PART_SHADE)) }
+                    ) {
+                        Text(text = "SUN_PART_SHADE")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.FULL_SHADE)) }
+                    ) {
+                        Text(text = "FULL SHADE")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnSunLightImageClick(sunlight = Sunlight.PART_SHADE)) }
+                    ) {
+                        Text(text = "PART SUNLIGHT")
+                    }
                 }
             }
 
             SelectedChip.CYCLE -> {
-                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.ANNUAL)) }) {
-                    Text(text = "ANNUAL")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIANNUAL)) }) {
-                    Text(text = "BIANNUAL")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIENNIAL)) }) {
-                    Text(text = "BIENNIAL")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL)) }) {
-                    Text(text = "PERENNIAL")
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.ANNUAL)) }
+                    ) {
+                        Text(text = "ANNUAL")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIANNUAL)) }
+                    ) {
+                        Text(text = "BIANNUAL")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.BIENNIAL)) }
+                    ) {
+                        Text(text = "BIENNIAL")
+                    }
+                    Button(modifier = Modifier
+                        .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnCycleImageClick(cycle = Cycle.PERENNIAL)) }
+                    ) {
+                        Text(text = "PERENNIAL")
+                    }
                 }
             }
 
             SelectedChip.WATERING -> {
-                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.FREQUENT)) }) {
-                    Text(text = "FREQUENT")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.AVERAGE)) }) {
-                    Text(text = "AVERAGE")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.MINIMUM)) }) {
-                    Text(text = "MINIMUM")
-                }
-                Button(onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE)) }) {
-                    Text(text = "NONE")
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.FREQUENT)) }
+                    ) {
+                        Text(text = "FREQUENT")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.AVERAGE)) }
+                    ) {
+                        Text(text = "AVERAGE")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.MINIMUM)) }
+                    ) {
+                        Text(text = "MINIMUM")
+                    }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp),
+                        onClick = { onEvent(HomeEvent.OnWaterImageClick(watering = Watering.NONE)) }
+                    ) {
+                        Text(text = "NONE")
+                    }
                 }
             }
 
             SelectedChip.TEMPERATURE -> {
                 Column(
                     modifier = Modifier
-                        .padding(end = 28.dp)
+                        .padding(horizontal = 20.dp)
                 ) {
                     RangeSlider(
                         value = uiState.sliderPosition,
                         steps = 12,
                         onValueChange = { onEvent(HomeEvent.OnSliderValueChange(range = it)) },
                         valueRange = 1f..13f,
-                        onValueChangeFinished = { },
+                        onValueChangeFinished = { onEvent(HomeEvent.OnSliderValueChangeFinished) },
                     )
                     Row(
                         modifier = Modifier
@@ -249,7 +328,7 @@ private fun PhotoSection(
                     }
                     Text(
                         modifier = Modifier.padding(start = 10.dp),
-                        text = data.commonName,
+                        text = data.commonName ?: "",
                         fontSize = 18.sp,
                         color = Color.White
                     )

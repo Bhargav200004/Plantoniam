@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PlantDefaultImage(
     @SerialName("license")
-    val license: Int,
+    val license: Int?,
     @SerialName("license_name")
-    val licenseName: String,
+    val licenseName: String?,
     @SerialName("license_url")
-    val licenseUrl: String,
+    val licenseUrl: String?,
     @SerialName("medium_url")
     val mediumUrl: String?,
     @SerialName("original_url")
-    val originalUrl: String,
+    val originalUrl: String?,
     @SerialName("regular_url")
     val regularUrl: String?,
     @SerialName("small_url")

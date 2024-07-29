@@ -46,6 +46,7 @@ class HomeViewModel @Inject constructor(
                            selectedChip = SelectedChip.CYCLE
                         )
                     }
+                    getAllImage(cycle = event.cycle.value)
                 }
                 Log.d(PLANTONIAM_LOGS , event.cycle.value)
                 onBottomSheetDismissClick()
@@ -57,6 +58,7 @@ class HomeViewModel @Inject constructor(
                             selectedChip = SelectedChip.SUNLIGHT
                         )
                     }
+                    getAllImage(sunlight = event.sunlight.value)
                 }
                 Log.d(PLANTONIAM_LOGS , event.sunlight.value)
                 onBottomSheetDismissClick()
@@ -96,6 +98,13 @@ class HomeViewModel @Inject constructor(
             HomeEvent.OnBottomSheetClick -> onBottomSheetClick()
             is HomeEvent.OnSelectedChipClick -> onSelectedChipClick(event)
             is HomeEvent.OnSliderValueChange -> onValueChange(event.range)
+            HomeEvent.OnSliderValueChangeFinished -> onBottomSheetDismissClick()
+        }
+    }
+
+    private fun onSliderValueChange() {
+        viewModelScope.launch {
+            getAllImage(startRange = state.value.startRange.toString() , endRange = state.value.endRange.toString())
         }
     }
 
@@ -113,6 +122,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
+            onSliderValueChange()
         }
 
     }
@@ -156,10 +166,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllImage(edible : String? = null , indoor: String? = null) {
+    private fun getAllImage(edible : String? = null , indoor: String? = null , startRange : String = "1", endRange : String = "13" , cycle : String = "" , sunlight : String = "") {
         try {
             viewModelScope.launch {
-                val response = plantImageRepository.getAllPlantList(edible = edible , indoor = indoor)
+                val response = plantImageRepository.getAllPlantList(edible = edible , indoor = indoor , startRange = startRange , endRange = endRange , cycle = cycle , sunlight = sunlight)
                 Log.d(PLANTONIAM_LOGS,response.toString())
                 _state.update { state ->
                     state.copy(

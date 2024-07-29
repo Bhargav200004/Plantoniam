@@ -42,4 +42,7 @@ sealed class HomeEvent {
     data class OnSliderValueChange(val range : ClosedFloatingPointRange<Float>) :
             HomeEvent()
 
+    data object OnSliderValueChangeFinished :
+            HomeEvent()
+
 }
