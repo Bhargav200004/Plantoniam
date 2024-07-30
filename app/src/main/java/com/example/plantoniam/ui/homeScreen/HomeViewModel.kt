@@ -64,6 +64,9 @@ class HomeViewModel @Inject constructor(
                 onBottomSheetDismissClick()
             }
             is HomeEvent.OnWaterImageClick -> {
+                viewModelScope.launch {
+                    getAllImage(watering = event.watering.value)
+                }
                 Log.d(PLANTONIAM_LOGS , event.watering.value)
                 onBottomSheetDismissClick()
             }
@@ -166,10 +169,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllImage(edible : String? = null , indoor: String? = null , startRange : String = "1", endRange : String = "13" , cycle : String = "" , sunlight : String = "") {
+    private fun getAllImage(edible : String? = null , indoor: String? = null , startRange : String = "1", endRange : String = "13" , cycle : String = "" , sunlight : String = "" , watering : String = "" , poisonous : String = "0") {
         try {
             viewModelScope.launch {
-                val response = plantImageRepository.getAllPlantList(edible = edible , indoor = indoor , startRange = startRange , endRange = endRange , cycle = cycle , sunlight = sunlight)
+                val response = plantImageRepository.getAllPlantList(
+                    edible = edible,
+                    indoor = indoor,
+                    startRange = startRange,
+                    endRange = endRange,
+                    cycle = cycle,
+                    sunlight = sunlight,
+                    watering = watering,
+                    poisonous = poisonous
+                )
                 Log.d(PLANTONIAM_LOGS,response.toString())
                 _state.update { state ->
                     state.copy(
@@ -195,6 +207,7 @@ class HomeViewModel @Inject constructor(
                                 toxicImage = FilterBarPictureComponents.NON_TOXIC
                             )
                         }
+                       getAllImage(poisonous = "0")
                     }
                 }
 
@@ -205,6 +218,7 @@ class HomeViewModel @Inject constructor(
                                 toxicImage = FilterBarPictureComponents.TOXIC
                             )
                         }
+                        getAllImage(poisonous = "1")
                     }
                 }
 

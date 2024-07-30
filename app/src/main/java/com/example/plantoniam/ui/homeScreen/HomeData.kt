@@ -9,7 +9,7 @@ data class HomeData(
     val cycleImage : FilterBarPictureComponents = FilterBarPictureComponents.CYCLE,
     val sunLightImage : FilterBarPictureComponents = FilterBarPictureComponents.SUNLIGHT,
     val waterImage : FilterBarPictureComponents = FilterBarPictureComponents.WATERING,
-    val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.TOXIC,
+    val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.NON_TOXIC,
     val index : Int = 1,
     val isTopBarShowing : Boolean = true,
     val plantList: PlantList? =  null,
