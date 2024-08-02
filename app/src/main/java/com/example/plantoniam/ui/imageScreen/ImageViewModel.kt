@@ -1,19 +1,18 @@
 package com.example.plantoniam.ui.imageScreen
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.example.plantoniam.ui.navigation.Route
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class ImageViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-//    val imageId = savedStateHandle.toRoute<Route.ImageScreenNavigation>().id
+//    val _state = MutableStateFlow()
+
+    val imageId = savedStateHandle.toRoute<Route.ImageScreenNavigation>().id
 
 
 }

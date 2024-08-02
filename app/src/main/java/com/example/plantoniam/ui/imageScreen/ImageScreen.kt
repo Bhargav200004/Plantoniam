@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedAssistChip
@@ -22,12 +21,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.plantoniam.R
 
 @Composable
-fun ImageScreen() {
+fun ImageScreen(navController: NavHostController) {
 
     val viewModel: ImageViewModel = viewModel()
+
+//    val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    Text(text = viewModel.imageId )
 
     val otherName: List<String> = listOf(
         "Striped Maple",

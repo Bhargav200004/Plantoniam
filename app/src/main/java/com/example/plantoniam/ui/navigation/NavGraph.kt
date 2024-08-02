@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.plantoniam.ui.homeScreen.HomeScreen
 import com.example.plantoniam.ui.imageScreen.ImageScreen
 
@@ -22,9 +21,8 @@ fun NavGraphSetup() {
             HomeScreen(navController)
         }
 
-        composable<Route.ImageScreenNavigation> { navBackStackEntry ->
-            val id = navBackStackEntry.toRoute<Route.ImageScreenNavigation>().id
-//            ImageScreen(navController)
+        composable<Route.ImageScreenNavigation> {
+            ImageScreen(navController)
         }
     }
 
