@@ -1,5 +1,6 @@
 package com.example.plantoniam.data.repository
 
+import com.example.plantoniam.domain.models.plantDetail.PlantDetail
 import com.example.plantoniam.domain.models.plantList.PlantList
 import com.example.plantoniam.domain.repository.PlantImageRepository
 import com.example.plantoniam.util.addingParameterAtEnd
@@ -14,9 +15,12 @@ class PlantImageRepositoryImpl @Inject constructor(
 ) : PlantImageRepository {
 
 
-    override suspend fun getAllPlantList(edible: String? , indoor: String? , startRange: String , endRange : String , cycle : String , sunlight : String , watering : String , poisonous : String): PlantList =
+        override suspend fun getAllPlantList(edible: String? , indoor: String? , startRange: String , endRange : String , cycle : String , sunlight : String , watering : String , poisonous : String): PlantList =
       httpClient.get(addingParameterAtEnd("species-list") + "&edible=$edible" + "&indoor=$indoor" + "&hardiness=$startRange-$endRange" + "&cycle=$cycle" + "&sunlight=$sunlight" + "&watering=$watering" + "&poisonous=$poisonous").body()
 
+
+    override suspend fun getPlantDetailById(id: String): PlantDetail =
+        httpClient.get("https://perenual.com/api/species/details/${id}?key=sk-pEmc66900e6bdad736221").body()
 
 }
 
