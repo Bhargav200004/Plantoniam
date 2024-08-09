@@ -5,10 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.plantoniam.domain.repository.PlantImageRepository
 import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
+import com.example.plantoniam.util.Cycle
+import com.example.plantoniam.util.SnackBarEvent
+import com.example.plantoniam.util.Sunlight
+import com.example.plantoniam.util.Watering
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -28,6 +34,9 @@ class HomeViewModel @Inject constructor(
         initialValue = HomeData()
     )
 
+    private val _snackBarEventFlow: MutableSharedFlow<SnackBarEvent> = MutableSharedFlow()
+    val snackBarEventFlow = _snackBarEventFlow.asSharedFlow()
+
 
     init {
         getAllImage()
@@ -46,7 +55,9 @@ class HomeViewModel @Inject constructor(
                            selectedChip = SelectedChip.CYCLE
                         )
                     }
-                    getAllImage(cycle = event.cycle.value)
+                    if (event.cycle != Cycle.BIENNIAL && event.cycle != Cycle.BIANNUAL ){
+                        getAllImage(cycle = event.cycle.value)
+                    }
                 }
                 Log.d(PLANTONIAM_LOGS , event.cycle.value)
                 onBottomSheetDismissClick()
@@ -58,14 +69,18 @@ class HomeViewModel @Inject constructor(
                             selectedChip = SelectedChip.SUNLIGHT
                         )
                     }
-                    getAllImage(sunlight = event.sunlight.value)
+                    if (event.sunlight != Sunlight.SUN_PART_SHADE){
+                        getAllImage(sunlight = event.sunlight.value)
+                    }
                 }
                 Log.d(PLANTONIAM_LOGS , event.sunlight.value)
                 onBottomSheetDismissClick()
             }
             is HomeEvent.OnWaterImageClick -> {
                 viewModelScope.launch {
-                    getAllImage(watering = event.watering.value)
+                    if (event.watering != Watering.NONE){
+                        getAllImage(watering = event.watering.value)
+                    }
                 }
                 Log.d(PLANTONIAM_LOGS , event.watering.value)
                 onBottomSheetDismissClick()
