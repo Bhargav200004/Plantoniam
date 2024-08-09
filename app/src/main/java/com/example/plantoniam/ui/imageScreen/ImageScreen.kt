@@ -27,11 +27,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.plantoniam.R
 import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
 import okhttp3.internal.wait
@@ -41,124 +45,94 @@ fun ImageScreen(navController: NavHostController) {
 
     val viewModel: ImageViewModel = hiltViewModel()
 
-    var value by remember { mutableStateOf("")}
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
 
-    Column (
+    val request = ImageRequest.Builder(context = LocalContext.current)
+        .data(data = uiState.plantDetail?.defaultImage?.regularUrl)
+        .crossfade(true)
+        .build()
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ){
-        value = viewModel.StateValue
-//        Text(text = viewModel.imageId )
-        Text(text = value)
-        Log.d(PLANTONIAM_LOGS , "ImageScreen value $value")
-        Button(
-            onClick = { viewModel.getImageById()
-            }) {
+            .padding(8.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(1 / 2.5f),
+                model = request,
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Common Name :- ${uiState.plantDetail?.commonName}",
+                style = MaterialTheme.typography.titleLarge
+            )
+            if (uiState.plantDetail?.scientificName?.isNotEmpty() == true) {
+                Text(
+                    text = "Scientific Name",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                LazyRow {
+                    items(uiState.plantDetail!!.otherName) { element ->
+                        ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
+                            onClick = { },
+                            label = { Text(text = element ?: "empty") }
+                        )
+                    }
 
-            Text(text = "Click for fetch")
+                }
+            }
+            if (uiState.otherName.isNotEmpty()) {
+                Text(
+                    text = "Other Name",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                LazyRow {
+                    items(uiState.plantDetail!!.otherName) { element ->
+                        ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
+                            onClick = { /*TODO*/ },
+                            label = { Text(text = element ?: "empty") }
+                        )
+                    }
+
+                }
+            }
+            Text(
+                text = "cycle: Perennial",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = "watering: Average",
+                style = MaterialTheme.typography.titleLarge
+            )
+            if (uiState.plantDetail?.sunlight?.isNotEmpty() == true) {
+                Text(
+                    text = "Sunlight",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                LazyRow{
+                    items(uiState.plantDetail!!.sunlight) { element ->
+                        ElevatedAssistChip(
+                            modifier = Modifier
+                                .padding(end = 15.dp),
+                            onClick = { /*TODO*/ },
+                            label = { Text(text = element ?: "empty") }
+                        )
+                    }
+                }
+            }
         }
     }
-
-
-
-    val otherName: List<String> = listOf(
-        "Striped Maple",
-        "Snakebark Maple",
-        "Moose Maple",
-        "Whistlewood",
-        "Goosefoot Maple"
-    )
-    val sunlight: List<String> = listOf(
-        "full sun",
-        "part shade"
-    )
-    val scientificName : List<String> = listOf(
-
-    )
-
-
-//    Box(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(8.dp),
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize(),
-//            verticalArrangement = Arrangement.spacedBy(10.dp)
-//        ) {
-//            Image(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .fillMaxHeight(1 / 2.5f),
-//                painter = painterResource(id = R.drawable.ic_launcher_background),
-//                contentDescription = null,
-//                contentScale = ContentScale.FillBounds
-//            )
-//            Spacer(modifier = Modifier.height(10.dp))
-//            Text(
-//                text = "Common Name :- Moosewood",
-//                style = MaterialTheme.typography.titleLarge
-//            )
-//            if (scientificName.isNotEmpty()) {
-//                Text(
-//                    text = "Scientific Name",
-//                    style = MaterialTheme.typography.titleLarge
-//                )
-//                LazyRow {
-//                    items(otherName) { element ->
-//                        ElevatedAssistChip(
-//                            modifier = Modifier
-//                                .padding(end = 15.dp),
-//                            onClick = { /*TODO*/ },
-//                            label = { Text(text = element) }
-//                        )
-//                    }
-//
-//                }
-//            }
-//            if (otherName.isNotEmpty()) {
-//                Text(
-//                    text = "Other Name",
-//                    style = MaterialTheme.typography.titleLarge
-//                )
-//                LazyRow {
-//                    items(otherName) { element ->
-//                        ElevatedAssistChip(
-//                            modifier = Modifier
-//                                .padding(end = 15.dp),
-//                            onClick = { /*TODO*/ },
-//                            label = { Text(text = element) }
-//                        )
-//                    }
-//
-//                }
-//            }
-//            Text(
-//                text = "cycle: Perennial",
-//                style = MaterialTheme.typography.titleLarge
-//            )
-//            Text(
-//                text = "watering: Average",
-//                style = MaterialTheme.typography.titleLarge
-//            )
-//            if (sunlight.isNotEmpty()) {
-//                Text(
-//                    text = "Sunlight",
-//                    style = MaterialTheme.typography.titleLarge
-//                )
-//                LazyRow{
-//                    items(sunlight) { element ->
-//                        ElevatedAssistChip(
-//                            modifier = Modifier
-//                                .padding(end = 15.dp),
-//                            onClick = { /*TODO*/ },
-//                            label = { Text(text = element) }
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

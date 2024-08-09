@@ -69,7 +69,7 @@ data class PlantDetail(
     @SerialName("other_images")
     val otherImages: String?,
     @SerialName("other_name")
-    val otherName: List<String?>?,
+    val otherName: List<String?>,
     @SerialName("pest_susceptibility")
     val pestSusceptibility: List<String?>?,
     @SerialName("pest_susceptibility_api")
@@ -93,7 +93,7 @@ data class PlantDetail(
     @SerialName("soil")
     val soil: List<String?>?,
     @SerialName("sunlight")
-    val sunlight: List<String?>?,
+    val sunlight: List<String?>,
     @SerialName("thorny")
     val thorny: Boolean?,
     @SerialName("tropical")
