@@ -3,6 +3,7 @@ package com.example.plantoniam.ui.imageScreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,14 +54,13 @@ fun ImageScreen(navController: NavHostController) {
     ) {
 
 
-
+        
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-
-            ImageScreenTopBar (
+            ImageScreenTopBar(
                 onBackButtonClick = {navController.popBackStack()}
             )
             AsyncImage(
@@ -142,15 +142,21 @@ fun ImageScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ImageScreenTopBar(modifier: Modifier = Modifier, onBackButtonClick: () -> Unit) {
-    TopAppBar(
-        title = { Text(text = "PLANTONIAM") },
-        navigationIcon = {
-            IconButton(onClick = onBackButtonClick) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .height(50.dp),
+        contentAlignment = Alignment.TopStart
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { onBackButtonClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null
                 )
             }
+            Text(text = "PLANTONIAM" , style = MaterialTheme.typography.titleLarge)
         }
-    )
+    }
 }
