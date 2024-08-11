@@ -1,6 +1,8 @@
 package com.example.plantoniam.ui.homeScreen
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -53,6 +56,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.plantoniam.ui.components.CanvasBackGround
 import com.example.plantoniam.ui.navigation.Route
+import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
 import com.example.plantoniam.util.Cycle
 import com.example.plantoniam.util.SnackBarEvent
 import com.example.plantoniam.util.Sunlight
@@ -73,10 +77,6 @@ fun HomeScreen(navController: NavHostController) {
     val snackBarState = remember{ SnackbarHostState() }
 
 
-
-
-
-
         if (uiState.showModalBottomSheet) {
             BottomSheet(
                 uiState = uiState,
@@ -84,24 +84,24 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
 
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
 
             AnimatedVisibility(
                 visible = uiState.isTopBarShowing,
                 enter = slideInVertically {
                     with(density) { -40.dp.roundToPx() }
                 } + expandVertically(
+                    animationSpec = tween(durationMillis = 1000),
                     expandFrom = Alignment.Top
                 ) + fadeIn(
                     initialAlpha = 0.3f
                 ),
-                exit = slideOutVertically() + shrinkVertically() + fadeOut()
+                exit = slideOutVertically(
+                    animationSpec =  tween(durationMillis = 1000 )
+                ) + shrinkVertically() + fadeOut()
             ) {
                 HomeScreenTopAppBar(
                     state = uiState,
@@ -320,10 +320,11 @@ private fun PhotoSection(
             .padding(top = 20.dp),
     ) {
 
-        uiState.plantList?.let { plantList ->
-            itemsIndexed(plantList.data) { index, data ->
+        uiState.plantList?.let {
+            itemsIndexed(it.data) { index, data ->
                 LaunchedEffect(key1 = index) {
                     onEvent(HomeEvent.OnCountIndex(index = index))
+                    Log.d(PLANTONIAM_LOGS , "index" + index)
                 }
 
                 Column(
@@ -366,6 +367,10 @@ private fun PhotoSection(
                 }
             }
         }
+
+
+
+
     }
 }
 
@@ -404,19 +409,29 @@ fun HomeScreenTopAppBar(
                 onEvent = onEvent
             )
         }
-        IconButton(
+
+        Text(text = "${state.toxicImage}" , color = Color.Black ,
             modifier = Modifier
-                .size(60.dp)
-                .align(Alignment.BottomCenter),
-            onClick = { onEvent(HomeEvent.OnToxicImageClick(state.toxicImage)) }
-        ) {
-            Image(
+                .align(Alignment.BottomCenter)
+            .padding(bottom = 80.dp))
+
+
+            IconButton(
                 modifier = Modifier
-                    .fillMaxSize(),
-                painter = painterResource(id = state.toxicImage.image),
-                contentDescription = null
-            )
-        }
+                    .size(60.dp)
+                    .align(Alignment.BottomCenter),
+                onClick = { onEvent(HomeEvent.OnToxicImageClick(state.toxicImage)) }
+            ) {
+                Image(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    painter = painterResource(id = state.toxicImage.image),
+                    contentDescription = null
+                )
+            }
+
+
+
 
     }
 }
@@ -437,18 +452,21 @@ private fun Column1(
     ) {
         FilterBarImages(
             image = state.edibleImage,
-            onImageClick = { onEvent(HomeEvent.OnEdibleImageClick(it)) }
+            onImageClick = { onEvent(HomeEvent.OnEdibleImageClick(it)) },
+            text = "${state.edibleImage}"
         )
         FilterBarImages(
             image = state.placeImage,
-            onImageClick = { onEvent(HomeEvent.OnPlaceImageClick(it)) }
+            onImageClick = { onEvent(HomeEvent.OnPlaceImageClick(it)) },
+            text = "${state.placeImage}"
         )
         FilterBarImages(
             image = state.temperatureImage,
             onImageClick = {
                 onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.TEMPERATURE))
                 onEvent(HomeEvent.OnBottomSheetClick)
-            }
+            },
+            text = "tempreature"
         )
     }
 }
@@ -469,21 +487,24 @@ fun Column2(
             onImageClick = {
                 onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.CYCLE))
                 onEvent(HomeEvent.OnBottomSheetClick)
-            }
+            },
+            text = "cycle"
         )
         FilterBarImages(
             image = state.sunLightImage,
             onImageClick = {
                 onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.SUNLIGHT))
                 onEvent(HomeEvent.OnBottomSheetClick)
-            }
+            },
+            text = "sunlight"
         )
         FilterBarImages(
             image = state.waterImage,
             onImageClick = {
                 onEvent(HomeEvent.OnSelectedChipClick(SelectedChip.WATERING))
                 onEvent(HomeEvent.OnBottomSheetClick)
-            }
+            },
+            text = "watering"
         )
     }
 }
@@ -491,20 +512,28 @@ fun Column2(
 @Composable
 private fun FilterBarImages(
     image: FilterBarPictureComponents,
-    onImageClick: (FilterBarPictureComponents) -> Unit
+    onImageClick: (FilterBarPictureComponents) -> Unit,
+    text : String
 ) {
-    IconButton(
-        modifier = Modifier
-
-            .size(60.dp),
-        onClick = { onImageClick(image) }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Image(
+        IconButton(
             modifier = Modifier
-                .fillMaxSize(),
-            painter = painterResource(id = image.image),
-            contentDescription = null
-        )
+
+                .size(60.dp),
+            onClick = { onImageClick(image) }
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxSize(),
+                painter = painterResource(id = image.image),
+                contentDescription = null
+            )
+
+        }
+        Text(text = text , color = Color.Black)
     }
 }
 

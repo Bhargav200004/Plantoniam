@@ -12,7 +12,7 @@ data class HomeData(
     val toxicImage : FilterBarPictureComponents = FilterBarPictureComponents.NON_TOXIC,
     val index : Int = 1,
     val isTopBarShowing : Boolean = true,
-    val plantList: PlantList? =  null,
+    val plantList: PlantList? = null,
     val showModalBottomSheet : Boolean = false,
     val selectedChip : SelectedChip = SelectedChip.SUNLIGHT,
     val sliderPosition : ClosedFloatingPointRange<Float> = 1f..13f,

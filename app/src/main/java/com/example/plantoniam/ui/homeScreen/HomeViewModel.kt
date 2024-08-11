@@ -3,6 +3,9 @@ package com.example.plantoniam.ui.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.example.plantoniam.domain.models.plantList.PlantData
 import com.example.plantoniam.domain.repository.PlantImageRepository
 import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
 import com.example.plantoniam.util.Cycle
@@ -10,12 +13,14 @@ import com.example.plantoniam.util.SnackBarEvent
 import com.example.plantoniam.util.Sunlight
 import com.example.plantoniam.util.Watering
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,9 +43,13 @@ class HomeViewModel @Inject constructor(
     val snackBarEventFlow = _snackBarEventFlow.asSharedFlow()
 
 
+
     init {
         getAllImage()
+
     }
+
+
 
 
     fun onEvent(event: HomeEvent){
@@ -108,6 +117,7 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
+
 
                 }
             }
@@ -184,10 +194,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllImage(edible : String? = null , indoor: String? = null , startRange : String = "1", endRange : String = "13" , cycle : String = "" , sunlight : String = "" , watering : String = "" , poisonous : String = "0") {
+    private fun getAllImage(page : Int = 1 ,edible : String? = null , indoor: String? = null , startRange : String = "1", endRange : String = "13" , cycle : String = "" , sunlight : String = "" , watering : String = "" , poisonous : String = "0") {
         try {
             viewModelScope.launch {
                 val response = plantImageRepository.getAllPlantList(
+                    page = page,
                     edible = edible,
                     indoor = indoor,
                     startRange = startRange,
@@ -197,10 +208,9 @@ class HomeViewModel @Inject constructor(
                     watering = watering,
                     poisonous = poisonous
                 )
-                Log.d(PLANTONIAM_LOGS,response.toString())
                 _state.update { state ->
                     state.copy(
-                        plantList = response
+                        plantList = response,
                     )
                 }
             }
@@ -209,6 +219,8 @@ class HomeViewModel @Inject constructor(
             Log.e(PLANTONIAM_LOGS , e.message.toString())
         }
     }
+
+
 
 
 
