@@ -27,22 +27,28 @@ sealed class HomeEvent {
     data class OnToxicImageClick(val filterBarPictureComponents: FilterBarPictureComponents) :
         HomeEvent()
 
-    data class OnCountIndex(val index : Int) :
-            HomeEvent()
+    data class OnCountIndex(val index: Int) :
+        HomeEvent()
 
     data object OnBottomSheetDismissClick :
-            HomeEvent()
+        HomeEvent()
 
     data object OnBottomSheetClick :
-            HomeEvent()
+        HomeEvent()
 
     data class OnSelectedChipClick(val selectedChip: SelectedChip) :
-            HomeEvent()
+        HomeEvent()
 
-    data class OnSliderValueChange(val range : ClosedFloatingPointRange<Float>) :
-            HomeEvent()
+    data class OnSliderValueChange(val range: ClosedFloatingPointRange<Float>) :
+        HomeEvent()
 
     data object OnSliderValueChangeFinished :
-            HomeEvent()
+        HomeEvent()
+
+    data class OnLeftArrowButtonClick(val page : Int?) :
+        HomeEvent()
+
+    data class OnRightArrowButtonClick(val page: Int?) :
+        HomeEvent()
 
 }

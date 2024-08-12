@@ -54,8 +54,12 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent){
         when(event){
-            is HomeEvent.OnEdibleImageClick ->  onEdibleImageClick()
-            is HomeEvent.OnPlaceImageClick -> onPlaceImageClick()
+            is HomeEvent.OnEdibleImageClick -> {
+                onEdibleImageClick()
+            }
+            is HomeEvent.OnPlaceImageClick -> {
+                onPlaceImageClick()
+            }
             is HomeEvent.OnTemperatureImageClick -> {}
             is HomeEvent.OnCycleImageClick -> {
                 viewModelScope.launch {
@@ -94,7 +98,9 @@ class HomeViewModel @Inject constructor(
                 Log.d(PLANTONIAM_LOGS , event.watering.value)
                 onBottomSheetDismissClick()
             }
-            is HomeEvent.OnToxicImageClick -> onToxicButtonClick()
+            is HomeEvent.OnToxicImageClick -> {
+                onToxicButtonClick()
+            }
             is HomeEvent.OnCountIndex -> {
                 viewModelScope.launch {
                     _state.update { state->
@@ -117,16 +123,40 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-
-
                 }
             }
 
-            HomeEvent.OnBottomSheetDismissClick -> onBottomSheetDismissClick()
-            HomeEvent.OnBottomSheetClick -> onBottomSheetClick()
-            is HomeEvent.OnSelectedChipClick -> onSelectedChipClick(event)
-            is HomeEvent.OnSliderValueChange -> onValueChange(event.range)
-            HomeEvent.OnSliderValueChangeFinished -> onBottomSheetDismissClick()
+            HomeEvent.OnBottomSheetDismissClick -> {
+                onBottomSheetDismissClick()
+            }
+            HomeEvent.OnBottomSheetClick -> {
+                onBottomSheetClick()
+            }
+            is HomeEvent.OnSelectedChipClick -> {
+                onSelectedChipClick(event)
+            }
+            is HomeEvent.OnSliderValueChange -> {
+                onValueChange(event.range)
+            }
+            HomeEvent.OnSliderValueChangeFinished -> {
+                onBottomSheetDismissClick()
+            }
+            is HomeEvent.OnLeftArrowButtonClick -> {
+                var position = event.page
+                position = position?.minus(1)
+                if (position != 1) {
+                    if (position != null) {
+                        getAllImage(page = position)
+                    }
+                }
+            }
+            is HomeEvent.OnRightArrowButtonClick -> {
+                var position = event.page
+                position = position?.plus(1)
+                if (position != null) {
+                    getAllImage(page = position)
+                }
+            }
         }
     }
 
@@ -211,6 +241,7 @@ class HomeViewModel @Inject constructor(
                 _state.update { state ->
                     state.copy(
                         plantList = response,
+                        plantData = response.data,
                     )
                 }
             }

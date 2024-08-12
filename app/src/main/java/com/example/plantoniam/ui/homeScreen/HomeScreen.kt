@@ -10,6 +10,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,10 +26,15 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -74,52 +80,51 @@ fun HomeScreen(navController: NavHostController) {
 
     val density = LocalDensity.current
 
-    val snackBarState = remember{ SnackbarHostState() }
+    val snackBarState = remember { SnackbarHostState() }
 
 
-        if (uiState.showModalBottomSheet) {
-            BottomSheet(
-                uiState = uiState,
-                viewModel::onEvent,
-            )
-        }
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-
-            AnimatedVisibility(
-                visible = uiState.isTopBarShowing,
-                enter = slideInVertically {
-                    with(density) { -40.dp.roundToPx() }
-                } + expandVertically(
-                    animationSpec = tween(durationMillis = 1000),
-                    expandFrom = Alignment.Top
-                ) + fadeIn(
-                    initialAlpha = 0.3f
-                ),
-                exit = slideOutVertically(
-                    animationSpec =  tween(durationMillis = 1000 )
-                ) + shrinkVertically() + fadeOut()
-            ) {
-                HomeScreenTopAppBar(
-                    state = uiState,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            PhotoSection(
-                uiState,
-                viewModel::onEvent,
-                navController,
-                viewModel.snackBarEventFlow,
-                snackBarState
-            )
-
-        }
+    if (uiState.showModalBottomSheet) {
+        BottomSheet(
+            uiState = uiState,
+            viewModel::onEvent,
+        )
     }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+
+        AnimatedVisibility(
+            visible = uiState.isTopBarShowing,
+            enter = slideInVertically {
+                with(density) { -40.dp.roundToPx() }
+            } + expandVertically(
+                animationSpec = tween(durationMillis = 1000),
+                expandFrom = Alignment.Top
+            ) + fadeIn(
+                initialAlpha = 0.3f
+            ),
+            exit = slideOutVertically(
+                animationSpec = tween(durationMillis = 1000)
+            ) + shrinkVertically() + fadeOut()
+        ) {
+            HomeScreenTopAppBar(
+                state = uiState,
+                onEvent = viewModel::onEvent
+            )
+        }
+
+        PhotoSection(
+            uiState,
+            viewModel::onEvent,
+            navController,
+            viewModel.snackBarEventFlow,
+            snackBarState
+        )
+
+    }
+}
 
 
 @Composable
@@ -313,65 +318,109 @@ private fun PhotoSection(
         }
     }
 
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
-            .fillMaxSize()
             .padding(top = 20.dp),
     ) {
+        itemsIndexed(uiState.plantData) { index, data ->
+            LaunchedEffect(key1 = index) {
+                onEvent(HomeEvent.OnCountIndex(index = index))
+                Log.d(PLANTONIAM_LOGS, uiState.index.toString())
+            }
 
-        uiState.plantList?.let {
-            itemsIndexed(it.data) { index, data ->
-                LaunchedEffect(key1 = index) {
-                    onEvent(HomeEvent.OnCountIndex(index = index))
-                    Log.d(PLANTONIAM_LOGS , "index" + index)
-                }
-
-                Column(
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
+                ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(10.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start
+                        .height(200.dp),
+                    onClick = { navController.navigate(Route.ImageScreenNavigation(data.id.toString())) },
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
                 ) {
-                    ElevatedCard(
+
+                    val requestImage = ImageRequest.Builder(LocalContext.current)
+                        .data(data.defaultImage?.regularUrl)
+                        .crossfade(true)
+                        .build()
+
+                    AsyncImage(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                        onClick = { navController.navigate(Route.ImageScreenNavigation(data.id.toString())) },
-                        shape = RoundedCornerShape(20.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-                    ) {
-
-                        val requestImage = ImageRequest.Builder(LocalContext.current)
-                            .data(data.defaultImage?.regularUrl)
-                            .crossfade(true)
-                            .build()
-
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            model = requestImage,
-                            contentDescription = null,
-                            contentScale = ContentScale.FillBounds
-                        )
+                            .fillMaxSize(),
+                        model = requestImage,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds
+                    )
 
 
-                    }
-                    Text(
-                        modifier = Modifier.padding(start = 10.dp),
-                        text = data.commonName ?: "",
-                        fontSize = 18.sp,
-                        color = Color.White
+                }
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = data.commonName ?: "",
+                    fontSize = 18.sp,
+                    color = Color.White
+                )
+            }
+        }
+
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(
+                    onClick = { onEvent(HomeEvent.OnLeftArrowButtonClick(uiState.plantList?.currentPage)) },
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(60.dp)
+                            ,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = null
+                    )
+                }
+                Text(
+                    text = "Pa",
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+            }
+        }
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Text(
+                    text = "ge:-${uiState.plantList?.currentPage}",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                IconButton(onClick = { onEvent(HomeEvent.OnRightArrowButtonClick(uiState.plantList?.currentPage)) }) {
+                    Icon(
+                        modifier = Modifier
+                            .size(60.dp),
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = null
                     )
                 }
             }
         }
 
-
-
-
     }
+
+
 }
 
 
@@ -410,27 +459,27 @@ fun HomeScreenTopAppBar(
             )
         }
 
-        Text(text = "${state.toxicImage}" , color = Color.Black ,
+        Text(
+            text = "${state.toxicImage}", color = Color.Black,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-            .padding(bottom = 80.dp))
+                .padding(bottom = 80.dp)
+        )
 
 
-            IconButton(
+        IconButton(
+            modifier = Modifier
+                .size(60.dp)
+                .align(Alignment.BottomCenter),
+            onClick = { onEvent(HomeEvent.OnToxicImageClick(state.toxicImage)) }
+        ) {
+            Image(
                 modifier = Modifier
-                    .size(60.dp)
-                    .align(Alignment.BottomCenter),
-                onClick = { onEvent(HomeEvent.OnToxicImageClick(state.toxicImage)) }
-            ) {
-                Image(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    painter = painterResource(id = state.toxicImage.image),
-                    contentDescription = null
-                )
-            }
-
-
+                    .fillMaxSize(),
+                painter = painterResource(id = state.toxicImage.image),
+                contentDescription = null
+            )
+        }
 
 
     }
@@ -513,7 +562,7 @@ fun Column2(
 private fun FilterBarImages(
     image: FilterBarPictureComponents,
     onImageClick: (FilterBarPictureComponents) -> Unit,
-    text : String
+    text: String
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -533,7 +582,7 @@ private fun FilterBarImages(
             )
 
         }
-        Text(text = text , color = Color.Black)
+        Text(text = text, color = Color.Black)
     }
 }
 

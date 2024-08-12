@@ -1,5 +1,6 @@
 package com.example.plantoniam.ui.homeScreen
 
+import com.example.plantoniam.domain.models.plantList.PlantData
 import com.example.plantoniam.domain.models.plantList.PlantList
 
 data class HomeData(
@@ -13,6 +14,7 @@ data class HomeData(
     val index : Int = 1,
     val isTopBarShowing : Boolean = true,
     val plantList: PlantList? = null,
+    val plantData: List<PlantData> = emptyList(),
     val showModalBottomSheet : Boolean = false,
     val selectedChip : SelectedChip = SelectedChip.SUNLIGHT,
     val sliderPosition : ClosedFloatingPointRange<Float> = 1f..13f,
