@@ -3,9 +3,6 @@ package com.example.plantoniam.ui.homeScreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.map
-import com.example.plantoniam.domain.models.plantList.PlantData
 import com.example.plantoniam.domain.repository.PlantImageRepository
 import com.example.plantoniam.util.Constant.PLANTONIAM_LOGS
 import com.example.plantoniam.util.Cycle
@@ -13,14 +10,12 @@ import com.example.plantoniam.util.SnackBarEvent
 import com.example.plantoniam.util.Sunlight
 import com.example.plantoniam.util.Watering
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -144,7 +139,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnLeftArrowButtonClick -> {
                 var position = event.page
                 position = position?.minus(1)
-                if (position != 1) {
+                if (position != 0) {
                     if (position != null) {
                         getAllImage(page = position)
                     }
