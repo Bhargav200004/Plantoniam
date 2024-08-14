@@ -1,6 +1,6 @@
 ﻿# Plantoniam
 
-   @# Main Features
+   ## Main Features
    - Filter Chips
    - Range Slider
    - Bottom Bar
