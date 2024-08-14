@@ -1,7 +1,7 @@
 ﻿# Plantoniam
 
-# Main Features
-- Filter Chips
+   # Main Features
+      - Filter Chips
 - Range Slider
 - Bottom Bar
 - page Counter
