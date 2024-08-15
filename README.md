@@ -1,4 +1,5 @@
 ﻿# Plantoniam
+ - Welcome to Plantoniam, the ultimate Android app for all your plant-related needs! Whether you're a seasoned gardener or just getting started, PlantInfo provides you with detailed information about various plants, care tips, and more.
 
    ## Main Features
    - Filter Chips
@@ -7,11 +8,10 @@
    - page Counter
 
    ## Example
-   |                                            |                                               |
-   |:------------------------------------------:|:----------------------------------------------|
-   |  ![](app/src/main/res/drawable/homescreen.png)  | ![](app/src/main/res/drawable/homescreen2.png)     |
-   | ![](app/src/main/res/drawable/bottombar.png) | ![](app/src/main/res/drawable/rangeslider.png)      |
-   | ![](app/src/main/res/drawable/plantinformationscreen.png)  |  |
+| <img src="app/src/main/res/drawable/homescreen.png" width="250"/> | <img src="app/src/main/res/drawable/homescreen2.png" width="250"/> |
+|:------------------------------------------------------------------:|:-------------------------------------------------------------------:|
+| <img src="app/src/main/res/drawable/bottombar.png" width="250"/>   | <img src="app/src/main/res/drawable/rangeslider.png" width="250"/>  |
+| <img src="app/src/main/res/drawable/plantinformationscreen.png" width="250"/> |  |
 
  ## Architecture 
   - MVVM Architecture (Model - ComposableView - ViewModel)
