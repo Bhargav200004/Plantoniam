@@ -9,9 +9,9 @@
    ## Example
    |                                            |                                               |
    |:------------------------------------------:|:----------------------------------------------|
-   |  ![](app/src/main/res/drawable/homescreen.png)  | ![](src/main/resources/Sovrikconnect.png)     |
-   | ![](src/main/resources/Bhargavconnect.png) | ![](src/main/resources/vivekmessage.png)      |
-   | ![](src/main/resources/sovrikmessage.png)  | ![](src/main/resources/bhargavdisconnect.png) |
+   |  ![](app/src/main/res/drawable/homescreen.png)  | ![](app/src/main/res/drawable/homescreen2.png)     |
+   | ![](app/src/main/res/drawable/bottombar.png) | ![](app/src/main/res/drawable/rangeslider.png)      |
+   | ![](app/src/main/res/drawable/plantinformationscreen.png)  |  |
 
  ## Architecture 
   - MVVM Architecture (Model - ComposableView - ViewModel)
