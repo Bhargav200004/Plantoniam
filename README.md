@@ -6,9 +6,12 @@
    - Bottom Bar
    - page Counter
 
-<p align="center" width="100%">
-   <img width="30%" height="50%" src="https://github.com/Bhargav200004/Plantoniam/blob/master/app/src/main/res/drawable/demovidio.mp4" />
- </p>
+   ## Example
+   |                                            |                                               |
+   |:------------------------------------------:|:----------------------------------------------|
+   |  ![](app/src/main/res/drawable/homescreen.png)  | ![](src/main/resources/Sovrikconnect.png)     |
+   | ![](src/main/resources/Bhargavconnect.png) | ![](src/main/resources/vivekmessage.png)      |
+   | ![](src/main/resources/sovrikmessage.png)  | ![](src/main/resources/bhargavdisconnect.png) |
 
  ## Architecture 
   - MVVM Architecture (Model - ComposableView - ViewModel)
