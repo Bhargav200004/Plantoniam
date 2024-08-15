@@ -8,10 +8,10 @@
    - page Counter
 
    ## Example
-| <img src="app/src/main/res/drawable/homescreen.png" width="350"/> | <img src="app/src/main/res/drawable/homescreen2.png" width="350"/> |
+| <img src="app/src/main/res/drawable/homescreen.png" width="300"/> | <img src="app/src/main/res/drawable/homescreen2.png" width="300"/> |
 |:------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| <img src="app/src/main/res/drawable/bottombar.png" width="350"/>   | <img src="app/src/main/res/drawable/rangeslider.png" width="350"/>  |
-| <img src="app/src/main/res/drawable/plantinformationscreen.png" width="350"/> |  |
+| <img src="app/src/main/res/drawable/bottombar.png" width="300"/>   | <img src="app/src/main/res/drawable/rangeslider.png" width="300"/>  |
+| <img src="app/src/main/res/drawable/plantinformationscreen.png" width="300"/> |  |
 
  ## Architecture 
   - MVVM Architecture (Model - ComposableView - ViewModel)
