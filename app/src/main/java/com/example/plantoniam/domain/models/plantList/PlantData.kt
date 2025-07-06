@@ -19,7 +19,7 @@ data class PlantData(
     @SerialName("scientific_name")
     val scientificName: List<String?>,
     @SerialName("sunlight")
-    val sunlight: List<String?>,
+    val sunlight: List<String>?,
     @SerialName("watering")
     val watering: String?
 )

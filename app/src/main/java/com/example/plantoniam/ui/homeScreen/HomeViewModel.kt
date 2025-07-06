@@ -41,9 +41,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getAllImage()
-
     }
-
 
 
 
@@ -80,6 +78,7 @@ class HomeViewModel @Inject constructor(
                     if (event.sunlight != Sunlight.SUN_PART_SHADE){
                         getAllImage(sunlight = event.sunlight.value)
                     }
+
                 }
                 Log.d(PLANTONIAM_LOGS , event.sunlight.value)
                 onBottomSheetDismissClick()
@@ -198,6 +197,7 @@ class HomeViewModel @Inject constructor(
             )
         }
     }
+
 
     private fun onBottomSheetDismissClick() {
         viewModelScope.launch {

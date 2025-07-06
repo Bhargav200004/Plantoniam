@@ -39,7 +39,7 @@ object AppModule {
     fun provideService(): HttpClient {
         return HttpClient(Android) {
 
-            // For Logging
+            // Logging for debugging
             install(Logging) {
                 level = LogLevel.ALL
                 logger = object : Logger {
@@ -49,34 +49,33 @@ object AppModule {
                 }
             }
 
-            // Timeout plugin
+            // Timeout configuration
             install(HttpTimeout) {
-                requestTimeoutMillis = 15000L
-                connectTimeoutMillis = 15000L
-                socketTimeoutMillis = 15000L
+                requestTimeoutMillis = 15_000L
+                connectTimeoutMillis = 15_000L
+                socketTimeoutMillis = 15_000L
             }
 
-            // JSON Response properties
+            // Handle JSON with null safety
             install(ContentNegotiation) {
                 json(
                     Json {
-                        ignoreUnknownKeys = true
-                        prettyPrint = true
-                        isLenient = true
-                        explicitNulls = false
+                        ignoreUnknownKeys = true  // Ignores extra fields from server
+                        isLenient = true          // Allows non-strict JSON
+                        prettyPrint = false       // Turn off in production
+                        explicitNulls = false     // Don't serialize nulls
+                        encodeDefaults = true     // Include default values in serialization
+                        coerceInputValues = true  // Prevent crashes from unexpected types
                     }
                 )
             }
 
-            // Default request for POST, PUT, DELETE,etc...
+            // Set default headers for all requests
             install(DefaultRequest) {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                //add this accept() for accept Json Body or Raw Json as Request Body
                 accept(ContentType.Application.Json)
-
             }
         }
-
     }
 
 
