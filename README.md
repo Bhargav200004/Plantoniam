@@ -13,6 +13,9 @@
 | <img src="app/src/main/res/drawable/bottombar.png" width="300"/>   | <img src="app/src/main/res/drawable/rangeslider.png" width="300"/>  |
 | <img src="app/src/main/res/drawable/plantinformationscreen.png" width="300"/> |  |
 
+  ## Demo Video
+https://github.com/user-attachments/assets/4ba09f5a-4162-4818-b27d-e00e5a7bab4a
+
  ## Architecture 
   - MVVM Architecture (Model - ComposableView - ViewModel)
   - Repository pattern
