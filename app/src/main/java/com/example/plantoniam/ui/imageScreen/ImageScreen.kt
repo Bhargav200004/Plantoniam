@@ -82,7 +82,7 @@ fun ImageScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.titleLarge
                 )
                 LazyRow {
-                    items(uiState.plantDetail!!.otherName) { element ->
+                    items(uiState.plantDetail!!.otherName ?: emptyList()) { element ->
                         ElevatedAssistChip(
                             modifier = Modifier
                                 .padding(end = 15.dp),
@@ -99,7 +99,7 @@ fun ImageScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.titleLarge
                 )
                 LazyRow {
-                    items(uiState.plantDetail!!.otherName) { element ->
+                    items(uiState.plantDetail!!.otherName ?: emptyList()) { element ->
                         ElevatedAssistChip(
                             modifier = Modifier
                                 .padding(end = 15.dp),
@@ -124,7 +124,7 @@ fun ImageScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.titleLarge
                 )
                 LazyRow {
-                    items(uiState.plantDetail!!.sunlight) { element ->
+                    items(uiState.plantDetail!!.sunlight ?: emptyList()) { element ->
                         ElevatedAssistChip(
                             modifier = Modifier
                                 .padding(end = 15.dp),

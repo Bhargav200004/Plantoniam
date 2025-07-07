@@ -50,7 +50,7 @@ class ImageViewModel @Inject constructor(
                 _state.update { state ->
                     state.copy(
                         plantDetail = response,
-                        otherName = response.otherName
+                        otherName = response.otherName ?: emptyList()
                     )
                 }
             }
